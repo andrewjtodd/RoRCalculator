@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: metrics-logback-3.0.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.codahale.metrics/metrics-logback/3.0.1/8de43adfffb3fe8cf380674877ab5d2782f7f0bf/metrics-logback-3.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.codahale.metrics/metrics-logback/3.0.1/1c38d6050f56622f553bf0d4fdabb06d3fe09e69/metrics-logback-3.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

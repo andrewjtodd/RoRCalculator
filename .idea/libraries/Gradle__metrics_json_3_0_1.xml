@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: metrics-json-3.0.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.codahale.metrics/metrics-json/3.0.1/6450c81c5f5b36a82fbb27a39ee3d9b7529a6770/metrics-json-3.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.codahale.metrics/metrics-json/3.0.1/709d73d45ce37d71f1d27c42c9f378f8810192da/metrics-json-3.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

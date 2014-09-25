@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: metrics-annotation-3.0.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.codahale.metrics/metrics-annotation/3.0.1/999be28942c85b95b70d34acba466cfe5cbd24a6/metrics-annotation-3.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.codahale.metrics/metrics-annotation/3.0.1/2909a025ad4dc60e915a17d805cd112293976323/metrics-annotation-3.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

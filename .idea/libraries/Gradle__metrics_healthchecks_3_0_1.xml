@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: metrics-healthchecks-3.0.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.codahale.metrics/metrics-healthchecks/3.0.1/bec37e61ebe40bf0f52f3fc8b7df57b5c1773682/metrics-healthchecks-3.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.codahale.metrics/metrics-healthchecks/3.0.1/86f3b1a877fffdd1ec634a7e0bdd5286e5a73208/metrics-healthchecks-3.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
