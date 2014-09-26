@@ -5,6 +5,7 @@ import io.dropwizard.Configuration;
 import javax.validation.Valid;
 
 /**
+ *
  * Created by Andrew Todd on 29/08/2014.
  */
 public class RoRConfig extends Configuration {
