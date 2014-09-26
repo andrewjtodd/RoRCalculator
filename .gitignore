@@ -18,3 +18,15 @@ build/tmp/jar/MANIFEST.MF
 src/main/.gradle/1.12/taskArtifacts/cache.properties
 
 src/main/.gradle/1.12/taskArtifacts/cache.properties.lock
+
+*.jar
+
+.idea/workspace.xml
+
+build/one-jar-build/doc/one-jar-license.txt
+
+build/one-jar-build/.version
+
+build/one-jar-build/META-INF/MANIFEST.MF
+
+build/tmp/oneJar/MANIFEST.MF
