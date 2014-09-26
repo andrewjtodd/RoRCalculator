@@ -1,6 +1,7 @@
 package au.com.privitar.core;
 
 import au.com.privitar.RoRConfig;
+import org.joda.time.DateTime;
 
 /**
  * Created by Andrew Todd on 29/08/2014.
@@ -18,6 +19,9 @@ public class RoRAnswer {
 
         double answer = 1 + 2;
 
+        ClientRoR clientRoR = new ClientRoR();
+        double openingBalance = clientRoR.getOpeningBalance(new DateTime());
+        System.out.println("Client opening balance is: " + openingBalance);
         setup(memberId);
         preparePersonalCalculationData();
         prepareInvestmentCalculationData();
