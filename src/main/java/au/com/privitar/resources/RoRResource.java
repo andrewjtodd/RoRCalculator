@@ -22,12 +22,11 @@ public class RoRResource {
     }
 
     @GET
-    public double getAnswer(@QueryParam("unitPrice") double price, @QueryParam("units") double units) {
-        System.out.println("Unit Price: " + price);
-        System.out.println("Units: " + units);
+    public double getAnswer(@QueryParam("memberId") int memberId) {
+        System.out.println("Member ID: " + memberId);
         RoRAnswer answer = new RoRAnswer(config);
 
-        return answer.calculate(price, units);
+        return answer.calculate(memberId);
 
     }
 }

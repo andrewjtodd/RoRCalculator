@@ -17,7 +17,7 @@ public class RoRService extends Application<RoRConfig> {
 
     @Override
     public String getName() {
-        return "Savings Calculator";
+        return "Rate of Return Calculator";
     }
 
     @Override
@@ -32,7 +32,7 @@ public class RoRService extends Application<RoRConfig> {
 
         final RoRHealthCheck healthCheck = new RoRHealthCheck();
 
-        env.healthChecks().register("Savings Calculator", healthCheck);
+        env.healthChecks().register("Rate of Return Calculator", healthCheck);
         env.jersey().register(resource);
     }
 }

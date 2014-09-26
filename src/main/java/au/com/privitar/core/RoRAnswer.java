@@ -12,11 +12,11 @@ public class RoRAnswer {
         this.config = config;
     }
 
-    public double calculate(double price, double units) {
+    public double calculate(int memberId) {
 
-        System.out.println("calculating the answer with base price of: " + config.getCalculations().getKwHCost());
+        System.out.println("calculating the rate of return for member: " + memberId);
 
-        double answer = price * units;
+        double answer = 1 + 2;
 
         System.out.println("answer is: " + answer);
 
