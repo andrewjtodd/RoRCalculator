@@ -1,2 +1,13 @@
 calculations:
     kwHCost: 0.25
+
+logging:
+    level: INFO
+    loggers:
+      io.dropwizard: INFO
+      au.com.privitar: DEBUG
+    appenders:
+      - type: console
+        threshold: ALL
+        target: stdout
+        timeZone: UTC
