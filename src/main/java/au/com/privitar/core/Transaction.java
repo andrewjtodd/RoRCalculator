@@ -25,6 +25,18 @@ public class Transaction {
     @JsonProperty
     private String investment;
 
+    public boolean isPositiveEffect() {
+        return positiveEffect;
+    }
+
+    public void setPositiveEffect(boolean isPositiveEffect) {
+        this.positiveEffect = isPositiveEffect;
+    }
+
+    @NotNull
+    @JsonProperty
+    private boolean positiveEffect;
+
     public DateTime getTransactionDate() {
         return transactionDate;
     }
@@ -59,11 +71,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
-                "transactionDate=" + transactionDate +
-                ", transactionType='" + transactionType + '\'' +
-                ", value=" + value +
-                ", investment='" + investment + '\'' +
-                '}';
+        return String.format("Transaction{investment = '%s', value='%f', type='%s', date='%s', effect='%b'}",
+                investment, value, transactionType, transactionDate, positiveEffect);
     }
 }
