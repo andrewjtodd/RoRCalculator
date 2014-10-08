@@ -15,11 +15,6 @@ public class TransactionItem {
         this.transaction = i;
     }
 
-    public void prepareSelf() {
-        int daysHeld = calculateDaysHeld();
-
-
-    }
 
     private int calculateDaysHeld() {
         DateTime trandate = transaction.getTransactionDate();
@@ -30,5 +25,12 @@ public class TransactionItem {
         logger.debug("Held this investment " + transaction.getInvestment() + " for " + daysHeld + " days.");
 
         return daysHeld;
+    }
+
+    public long getOutcome() {
+
+        long outcome = calculateDaysHeld() * transaction.getValueAsLong();
+
+        return outcome;
     }
 }

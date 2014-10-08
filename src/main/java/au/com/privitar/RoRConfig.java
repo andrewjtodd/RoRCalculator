@@ -1,5 +1,6 @@
 package au.com.privitar;
 
+import au.com.privitar.config.Calculations;
 import io.dropwizard.Configuration;
 
 import javax.validation.Valid;
@@ -11,13 +12,13 @@ import javax.validation.Valid;
 public class RoRConfig extends Configuration {
 
     @Valid
-    private au.com.privitar.config.RoRConfig calculations;
+    private Calculations calculations;
 
-    public au.com.privitar.config.RoRConfig getCalculations() {
+    public Calculations getCalculations() {
         return calculations;
     }
 
-    public void setCalculations(au.com.privitar.config.RoRConfig calculations) {
+    public void setCalculations(Calculations calculations) {
         this.calculations = calculations;
     }
 }

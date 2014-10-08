@@ -108,6 +108,15 @@
     <orderEntry type="library" exported="" name="Gradle: javax.servlet-api-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jersey-client-1.18.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: fest-util-1.2.5" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/groovy-all-2.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

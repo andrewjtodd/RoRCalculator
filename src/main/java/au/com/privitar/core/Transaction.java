@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.joda.time.DateTime;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 /**
- * Created by Andrew Todd on 26/09/2014.
+ * Created by Andrew Todd on 26/09/2014
  */
 public class Transaction {
+    private static final java.math.BigDecimal TO_CENTS = new BigDecimal(100);
+
     @NotNull
     @JsonProperty
     private DateTime transactionDate;
@@ -24,6 +28,7 @@ public class Transaction {
     @NotNull
     @JsonProperty
     private String investment;
+    private long valueAsLong;
 
     public boolean isPositiveEffect() {
         return positiveEffect;
@@ -59,6 +64,7 @@ public class Transaction {
 
     public void setValue(double value) {
         this.value = value;
+        valueAsLong = new BigDecimal(value).multiply(TO_CENTS, MathContext.DECIMAL32).longValueExact();
     }
 
     public String getInvestment() {
@@ -73,5 +79,9 @@ public class Transaction {
     public String toString() {
         return String.format("Transaction{investment = '%s', value='%f', type='%s', date='%s', effect='%b'}",
                 investment, value, transactionType, transactionDate, positiveEffect);
+    }
+
+    public long getValueAsLong() {
+        return valueAsLong;
     }
 }

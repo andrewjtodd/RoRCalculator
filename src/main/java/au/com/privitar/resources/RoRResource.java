@@ -1,9 +1,11 @@
 package au.com.privitar.resources;
 
 import au.com.privitar.RoRConfig;
+import au.com.privitar.core.InvestmentRoRCalculator;
 import au.com.privitar.core.RoRAnswer;
 import au.com.privitar.core.Transaction;
-import au.com.privitar.core.TransactionItem;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.slf4j.Logger;
 
 import javax.ws.rs.*;
@@ -31,101 +33,44 @@ public class RoRResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public void getAnswer(List<Transaction> transactions) {
 
-        // we need to cut the transactions into a few items
-        // 1. investments, and organised by in and out transactions
-        // 2. as-is, but organised by in and out transactions
-        // so we need to map the in and out transactions
+        Days reportingPeriod = determineReportingPeriod();
 
-        // get all the buy and sell transactions separated - true means positive balance impact
-        List<Transaction> positiveTrans = groupTransactionsByEffect(transactions, true);
-        List<Transaction> negativeTrans = groupTransactionsByEffect(transactions, false);
-
-        // have enough now to do the calculations for the account
-
-
-        // I don't think this is right. Just get the investments together, then filter later.
-        // TODO: remove this specifically
-        // group all investments that have a positive impact on balance
-//        logger.debug("Getting all buys, based on investment");
-//        Map<String, List<Transaction>> positiveInvestments = groupInvestments(transactions, true);
-//
-//        // group all investments that have negative impact on balance
-//        logger.debug("Getting all sells, based on investment");
-//        Map<String, List<Transaction>> negativeInvestments = groupInvestments(transactions, false);
-
-        // Maybe this is the way:
-        // todo - check and compare with above
-        // this gives a bunch of investments, containing a list of transactions
         Map<String, List<Transaction>> groupedInvestments = groupInvestments(transactions);
 
         // process the investments - they need to be split and then the calculation occurs
-        calculateInvestmentRoR(groupedInvestments);
-
-
+        calculateInvestmentGroupRoR(groupedInvestments, reportingPeriod);
     }
 
-    private void calculateInvestmentRoR(Map<String, List<Transaction>> groupedInvestments) {
+    private Days determineReportingPeriod() {
+        DateTime start = config.getCalculations().getStartDate();
+        DateTime end = config.getCalculations().getEndDate();
+
+        Days days = Days.daysBetween(start, end);
+        logger.debug("Reporting period is: " + days.getDays() + " days.");
+        return days;
+    }
+
+    private void calculateInvestmentGroupRoR(Map<String, List<Transaction>> groupedInvestments, Days period) {
         // process each investment individually
         Collection<List<Transaction>> transactions = groupedInvestments.values();
 
-        transactions.forEach((i) -> calculateInvestmentAnswer(i));
-
+        transactions.forEach((investment) -> calculateInvestmentRoR(investment, period));
     }
 
-    private void calculateInvestmentAnswer(List<Transaction> t) {
+    public double calculateInvestmentRoR(List<Transaction> investmentTransactions, Days reportingPeriod) {
+        double ror = 0;
 
-        // we have an investment so now run the actual workings of the calculation
+        InvestmentRoRCalculator calculator = new InvestmentRoRCalculator();
+        ror = calculator.calculateRoR(investmentTransactions, reportingPeriod);
 
-        // split the investment into buy and sell groupings
-        List<Transaction> positiveTrans = groupTransactionsByEffect(t, true);
-        List<Transaction> negativeTrans = groupTransactionsByEffect(t, false);
-
-        printTransactions(positiveTrans);
-        printTransactions(negativeTrans);
-
-        // calculate the numerator
-
-        // calculate the denominator
-        long den = calculateInvestmentDenominator(positiveTrans, negativeTrans);
-        long num = calculateInvestmentNumerator(positiveTrans, negativeTrans);
-
-//        t.stream().forEach(tran -> calculateInvestmentRoR(tran));
-
-    }
-
-    private void printTransactions(List<Transaction> t) {
-
-        logger.debug("==============================================");
-        t.stream().forEach((i) -> logger.debug(i.toString()));
-        logger.debug("==============================================");
-
-    }
-
-    private long calculateInvestmentNumerator(List<Transaction> pos, List<Transaction> neg) {
-        logger.debug("Calculating the investment numerators");
-
-        return 0;
-    }
-
-    private long calculateInvestmentDenominator(List<Transaction> pos, List<Transaction> neg) {
-        logger.debug("Calculating the investment denominators");
-
-        //
-        pos.stream().forEach((i) -> prepBaseData(i));
-        return 0;
-    }
-
-    private void prepBaseData(Transaction i) {
-        // this is not the way to do it. should just get the transaction item to do all the work it needs.
-        TransactionItem item = new TransactionItem(i);
-        item.prepareSelf();
+        // finally, convert the rate of return into a percentage.
+        return ror;
     }
 
     private Map<String, List<Transaction>> groupInvestments(List<Transaction> transactions) {
         Map<String, List<Transaction>> theList = transactions.stream()
                 .collect(Collectors.groupingBy(Transaction::getInvestment));
 
-        printInvestments(theList);
         return theList;
     }
 
@@ -135,33 +80,15 @@ public class RoRResource {
                 .filter(t -> t.isPositiveEffect() == b)
                 .collect(Collectors.groupingBy(Transaction::getInvestment));
 
-        printInvestments(theList);
-
         return theList;
     }
 
     private void printInvestments(Map<String, List<Transaction>> groupByTransaction) {
+        logger.debug("Total investments to process: " + groupByTransaction.size());
         logger.debug("-------------investments----------" + groupByTransaction.size() + " investment(s)");
-        logger.debug(Arrays.toString(groupByTransaction.entrySet().toArray()));
+        logger.debug(Arrays.toString(groupByTransaction.keySet().toArray()));
         logger.debug("-------------end---------------");
     }
-
-
-    private List<Transaction> groupTransactionsByEffect(List<Transaction> transactions, boolean positiveEffect) {
-
-        return transactions.parallelStream()
-                .filter(transaction -> transaction.isPositiveEffect() == positiveEffect)
-                .collect(Collectors.toList());
-
-    }
-
-//    private void printTransactionsList(List<Transaction> trans) {
-//        logger.debug("-------------------------" + trans.size() + " in total");
-//
-//        trans.stream().forEach((item) -> logger.debug(item.toString()));
-//
-//        logger.debug("-----------end--------------");
-//    }
 
     @GET
     public double getAnswer(@QueryParam("member") String member) {

@@ -1,5 +1,7 @@
 calculations:
     kwHCost: 0.25
+    endDate: 2014-07-01
+    startDate: 2013-06-30
 
 logging:
     level: INFO
