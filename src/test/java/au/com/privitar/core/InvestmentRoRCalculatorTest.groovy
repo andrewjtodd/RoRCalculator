@@ -13,18 +13,28 @@ class InvestmentRoRCalculatorTest extends GroovyTestCase {
 
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
     private static List<Transaction> transactionList;
-    private static Days period = Days.days(100);
+    private static Days period = Days.days(458);
+    private static DateTime start = new DateTime().withDate(2007, 7, 1);
+    private static DateTime end = new DateTime().withDate(2008, 9, 30);
+
 
     @Test
     public void testNumeratorCalc() throws Exception {
-        long numerator = new InvestmentRoRCalculator().calculateInvestmentNumerator(transactionList, period);
+        long numerator = new InvestmentRoRCalculator().calculateInvestmentNumerator(transactionList, start, end);
         assert(numerator == 15000000);
     }
 
     @Test
     public void testDenominatorCalc() throws Exception {
-        long denom = new InvestmentRoRCalculator().calculateInvestmentDenominator(transactionList, period);
+        long denom = new InvestmentRoRCalculator().calculateInvestmentDenominator(transactionList, start, end);
         assert(denom == 900000000);
+
+    }
+
+    @Test
+    public void testCalc() throws Exception {
+        long answer = new InvestmentRoRCalculator().calculateRoR(transactionList, start, end);
+        assert (answer == 0.15387)
 
     }
 
@@ -33,45 +43,47 @@ class InvestmentRoRCalculatorTest extends GroovyTestCase {
         super.setUp()
         final Transaction transaction = new Transaction();
         transaction.setInvestment("IFL");
-        transaction.setTransactionDate(new DateTime().withDate(2014, 9, 21));
-        transaction.setTransactionType("Buy - Switch");
+        transaction.setTransactionDate(new DateTime().withDate(2007, 7, 1));
+        transaction.setTransactionType("Contribution");
         transaction.setPositiveEffect(true);
-        transaction.setValue(500);
+        transaction.setValue(90000);
 
         final Transaction t1 = new Transaction();
         t1.setInvestment("IFL");
-        t1.setTransactionDate(new DateTime().withDate(2014, 9, 21));
-        t1.setTransactionType("Contribution");
+        t1.setTransactionDate(new DateTime().withDate(2007, 7, 1));
+        t1.setTransactionType("Buy");
         t1.setPositiveEffect(true);
-        t1.setValue(2000);
+        t1.setValue(500);
 
-        final Transaction t2 = new Transaction();
-        t2.setInvestment("IFL");
-        t2.setTransactionDate(new DateTime().withDate(2014, 9, 21));
-        t2.setTransactionType("Sell - Switch");
-        t2.setPositiveEffect(false);
-        t2.setValue(1000);
+        final Transaction tran2 = new Transaction();
+        tran2.setInvestment("IFL");
+        tran2.setTransactionDate(new DateTime().withDate(2008, 1, 1));
+        tran2.setTransactionType("Buy");
+        tran2.setPositiveEffect(true);
+        tran2.setValue(2000);
 
         final Transaction t3 = new Transaction();
-        t3.setInvestment("BHP");
-        t3.setTransactionDate(new DateTime().withDate(2014, 9, 21));
-        t3.setTransactionType("Sell - Switch");
+        t3.setInvestment("IFL");
+        t3.setTransactionDate(new DateTime().withDate(2007, 7, 1));
+        t3.setTransactionType("Sell");
         t3.setPositiveEffect(false);
-        t3.setValue(50);
+        t3.setValue(1000);
 
         final Transaction t4 = new Transaction();
-        t4.setInvestment("BHP");
-        t4.setTransactionDate(new DateTime().withDate(2014, 9, 21));
-        t4.setTransactionType("Buy");
-        t4.setPositiveEffect(true);
-        t4.setValue(100);
+        t4.setInvestment("IFL");
+        t4.setTransactionDate(new DateTime().withDate(2009, 10, 1));
+        t4.setTransactionType("Sell");
+        t4.setPositiveEffect(false);
+        t4.setValue(50);
 
-        transactionList = new ArrayList<Transaction>(3);
+
+        transactionList = new ArrayList<Transaction>(5);
         transactionList.add(transaction);
         transactionList.add(t1);
-        transactionList.add(t2);
-//        transactionList.add(transaction3);
-//        transactionList.add(transaction4);
+        transactionList.add(tran2);
+        transactionList.add(t3);
+        transactionList.add(t4);
+
     }
 
     void tearDown() {

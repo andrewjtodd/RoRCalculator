@@ -12,12 +12,14 @@ public class TransactionItem {
     private Transaction transaction;
 
     public TransactionItem(Transaction i) {
+        super();
         this.transaction = i;
     }
 
-
     private int calculateDaysHeld() {
         DateTime trandate = transaction.getTransactionDate();
+
+        // this works fine if the date is always today, what about back periods?
         DateTime now = new DateTime();
 
         int daysHeld = Days.daysBetween(trandate, now).getDays();
@@ -30,7 +32,6 @@ public class TransactionItem {
     public long getOutcome() {
 
         long outcome = calculateDaysHeld() * transaction.getValueAsLong();
-
         return outcome;
     }
 }

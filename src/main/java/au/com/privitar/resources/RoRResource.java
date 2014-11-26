@@ -1,7 +1,6 @@
 package au.com.privitar.resources;
 
 import au.com.privitar.RoRConfig;
-import au.com.privitar.core.InvestmentRoRCalculator;
 import au.com.privitar.core.RoRAnswer;
 import au.com.privitar.core.Transaction;
 import org.joda.time.DateTime;
@@ -60,8 +59,8 @@ public class RoRResource {
     public double calculateInvestmentRoR(List<Transaction> investmentTransactions, Days reportingPeriod) {
         double ror = 0;
 
-        InvestmentRoRCalculator calculator = new InvestmentRoRCalculator();
-        ror = calculator.calculateRoR(investmentTransactions, reportingPeriod);
+//        InvestmentRoRCalculator calculator = new InvestmentRoRCalculator(start, end);
+//        ror = calculator.calculateRoR(investmentTransactions, reportingPeriod);
 
         // finally, convert the rate of return into a percentage.
         return ror;
